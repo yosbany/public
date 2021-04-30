@@ -1,0 +1,2941 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "SWAGGER API-SOR",
+    "description" : "API-SOR expone y persiste la información de interes para el negocio asociada a los procesos comerciales.",
+    "contact" : {
+      "name" : "IBM-Soporte",
+      "email" : "IBM-BPMSoporte@bse.com.uy"
+    },
+    "version" : "1.0.0"
+  },
+  "tags" : [ {
+    "name" : "BÚSQUEDAS",
+    "description" : "Operaciones con las búsquedas guardadas @versión: 1"
+  }, {
+    "name" : "CODIGUERAS",
+    "description" : "Operaciones con las codigueras @versión: 1"
+  }, {
+    "name" : "DATOS COMUNES",
+    "description" : "Operaciones con los datos comunes @versión: 1"
+  }, {
+    "name" : "INSTANCIAS",
+    "description" : "Operaciones con las instancias @versión: 1"
+  } ],
+  "paths" : {
+    "/v1/codigueras" : {
+      "get" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Obtener todas las codigueras.",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/CodigueraBasic"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Crear codiguera.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewCodiguera"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/codigueras/search" : {
+      "get" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Buscar codigueras con filtros, paginación y ordenación.",
+        "description" : "Búsqueda de <b><i>codigueras</i></b> con filtros, paginación y ordenación.<br/>Campos de búsqueda(fields) Permitidos: <b><i>code | name</i></b><br/>Campos para ordenar(sort) Permitidos: <b><i>name</i></b><br/>Operadores permitidos: <b><i>eq | ne | lt | lte | gt | gte | in | nin | like | nlike | null | nnull</i></b><br/>Operadores lógicos permitidos: <b><i>and | or</i></b><br/>Campos devueltos en un registro: <b><i>code | name | items[]</i></b><br/><br/><b>Ejemplos: </b><br/> <b>filteredBy:</b> field1[eq]:value1;and;field2[like]:value2<br/> <b>pagedBy:</b> size:100;number:1<br/> <b>orderedBy:</b> -field1;+field2",
+        "parameters" : [ {
+          "name" : "filteredBy",
+          "in" : "query",
+          "description" : "Criterios para los filtros de la búsqueda.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderedBy",
+          "in" : "query",
+          "description" : "Criterios para el orden de la búsqueda.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "pagedBy",
+          "in" : "query",
+          "description" : "Criterios para la paginación de los resultados.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Retrieve"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/codigueras/{code}" : {
+      "get" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Obtener codiguera.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la codiguera",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Codiguera"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Actualizar codiguera.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la codiguera",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChangeCodiguera"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Eliminar codiguera.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la codiguera",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/codigueras/{code}/items" : {
+      "post" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Crear item codiguera.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la codiguera",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewItemCodiguera"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/codigueras/{code}/items/{itemCode}" : {
+      "get" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Obtener item de codiguera.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la codiguera",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }, {
+          "name" : "itemCode",
+          "in" : "path",
+          "description" : "Código del item de la codiguera",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ItemCodiguera"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Actualizar item de codiguera.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la codiguera",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }, {
+          "name" : "itemCode",
+          "in" : "path",
+          "description" : "Código del item de la codiguera",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChangeItemCodiguera"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Eliminar item codiguera.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la codiguera",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }, {
+          "name" : "itemCode",
+          "in" : "path",
+          "description" : "Código del item de la codiguera",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/codigueras/{code}/items/{itemCode}/move" : {
+      "put" : {
+        "tags" : [ "CODIGUERAS" ],
+        "summary" : "Mover item de codiguera.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la codiguera.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }, {
+          "name" : "itemCode",
+          "in" : "path",
+          "description" : "Código del item de la codiguera.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }, {
+          "name" : "targetCode",
+          "in" : "query",
+          "description" : "Código destino de codiguera a donde se mueve el item.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/data" : {
+      "get" : {
+        "tags" : [ "DATOS COMUNES" ],
+        "summary" : "Obtener todos los datos comunes.",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/CommonData"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "DATOS COMUNES" ],
+        "summary" : "Crear dato común.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewCommonData"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/data/search" : {
+      "get" : {
+        "tags" : [ "DATOS COMUNES" ],
+        "summary" : "Buscar datos comunes con filtros, paginación y ordenación.",
+        "description" : "Búsqueda de <b><i>datos comunes</i></b> con filtros, paginación y ordenación.<br/>Campos de búsqueda(fields) Permitidos: <b><i>code | name</i></b><br/>Campos para ordenar(sort) Permitidos: <b><i>name</i></b><br/>Operadores permitidos: <b><i>eq | ne | lt | lte | gt | gte | in | nin | like | nlike | null | nnull</i></b><br/>Operadores lógicos permitidos: <b><i>and | or</i></b><br/>Campos devueltos en un registro: <b><i>code | name | value(json)</i></b><br/><br/><b>Ejemplos: </b><br/><b>filteredBy:</b> field1[eq]:value1;and;field2[like]:value2<br/><b>orderedBy:</b> -field1;+field2<br/><b>pagedBy:</b> size:100;number:1",
+        "parameters" : [ {
+          "name" : "filteredBy",
+          "in" : "query",
+          "description" : "Criterios para los filtros de la búsqueda.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderedBy",
+          "in" : "query",
+          "description" : "Criterios para el orden de la búsqueda.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "pagedBy",
+          "in" : "query",
+          "description" : "Criterios para la paginación de los resultados.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Retrieve"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/data/{code}" : {
+      "get" : {
+        "tags" : [ "DATOS COMUNES" ],
+        "summary" : "Obtener dato común.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código del dato común",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/CommonData"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "DATOS COMUNES" ],
+        "summary" : "Actualizar dato común.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código del dato común.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChangeCommonData"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "DATOS COMUNES" ],
+        "summary" : "Eliminar dato común.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código del dato común",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instances/search" : {
+      "get" : {
+        "tags" : [ "INSTANCIAS" ],
+        "summary" : "Buscar instancias con filtros, paginación y ordenación.",
+        "description" : "Búsqueda de <b><i>instancias</i></b> con filtros, paginación y ordenación.<br/>Campos de búsqueda(fields) Permitidos: <b><i>nro | name | status</i></b><br/>Campos para ordenar(sort) Permitidos: <b><i>nro | name | status</i></b><br/>Operadores permitidos: <b><i>eq | ne | lt | lte | gt | gte | in | nin | like | nlike | null | nnull</i></b><br/>Operadores lógicos permitidos: <b><i>and | or</i></b><br/>Campos devueltos en un registro: <b><i>nro | name | status | startDate | isAtRisk | atRiskDate | dueDate | lastModifiedDatetime | closeDatetime</i></b><br/><br/> <b>Ejemplos: </b><br/> <b>filteredBy:</b> field1[eq]:value1;and;field2[like]:value2<br/> <b>pagedBy:</b> size:100;number:1<br/> <b>orderedBy:</b> -field1;+field2",
+        "parameters" : [ {
+          "name" : "filteredBy",
+          "in" : "query",
+          "description" : "Criterios para los filtros de la búsqueda.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderedBy",
+          "in" : "query",
+          "description" : "Criterios para el orden de la búsqueda.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "pagedBy",
+          "in" : "query",
+          "description" : "Criterios para la paginación de los resultados.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Retrieve"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instances/{instanceNro}" : {
+      "get" : {
+        "tags" : [ "INSTANCIAS" ],
+        "summary" : "Obtener instancia.",
+        "parameters" : [ {
+          "name" : "instanceNro",
+          "in" : "path",
+          "description" : "Número de la instancia.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Instance"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "INSTANCIAS" ],
+        "summary" : "Actualizar instancia.",
+        "description" : "Actualizar la información de la instancia.<br/><b>Acciones permitidas: </b><i>iniciar-tarea | finalizar-tarea | finalizar-instancia | actualizar-tareas | actualizar-variables | datos-instancia<br/><b>Validaciones:</b><br/><b>-iniciar-tarea:</b> Debe de ingresar una tarea con todos los datos cargados inyudendo la fecha de inicio.<br/><b>-finalizar-tarea:</b> Debe de ingresar una tarea con todos los datos cargados inyudendo la fecha de cierre y debe existir.<br/><b>-finalizar-instancia:</b> Debe de ingresar los datos: número de instancia, fecha, usuario  y nuevo estado (completed | terminated) .</b><br/><b>-actualizar-tareas:</b> En base a la lista de tareas enviada se realizará el ABM según corresponda.<br/><b>-actualizar-variables:</b> En base a la lista de variables enviada se realizará el ABM según corresponda.<br/><b>-datos-instancia:</b> Actualiza solamente datos primer nivel de la instancia.<br/>",
+        "parameters" : [ {
+          "name" : "instanceNro",
+          "in" : "path",
+          "description" : "Número de la instancia.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        }, {
+          "name" : "action",
+          "in" : "query",
+          "description" : "Acción a realizar.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChangeDataInstance"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "INSTANCIAS" ],
+        "summary" : "Crear instancia.",
+        "parameters" : [ {
+          "name" : "instanceNro",
+          "in" : "path",
+          "description" : "Número de la instancia.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewInstance"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "INSTANCIAS" ],
+        "summary" : "Eliminar instancia.",
+        "parameters" : [ {
+          "name" : "instanceNro",
+          "in" : "path",
+          "description" : "Número de la instancia.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instances/{instanceNro}/task" : {
+      "get" : {
+        "tags" : [ "INSTANCIAS" ],
+        "summary" : "Obtener todas las tareas instancia.",
+        "parameters" : [ {
+          "name" : "instanceNro",
+          "in" : "path",
+          "description" : "Número de la instancia.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Task"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instances/{instanceNro}/tasks/{taskNro}" : {
+      "get" : {
+        "tags" : [ "INSTANCIAS" ],
+        "summary" : "Obtener tarea de la instancia.",
+        "parameters" : [ {
+          "name" : "instanceNro",
+          "in" : "path",
+          "description" : "Número de la instancia.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }, {
+          "name" : "taskNro",
+          "in" : "path",
+          "description" : "Número de la tarea.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Task"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instances/{instanceNro}/variables" : {
+      "get" : {
+        "tags" : [ "INSTANCIAS" ],
+        "summary" : "Obtener todas las variables de la instancia.",
+        "parameters" : [ {
+          "name" : "instanceNro",
+          "in" : "path",
+          "description" : "Número de la instancia.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Variable"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instances/{instanceNro}/variables/{variableCode}" : {
+      "get" : {
+        "tags" : [ "INSTANCIAS" ],
+        "summary" : "Obtener variable de la instancia.",
+        "parameters" : [ {
+          "name" : "instanceNro",
+          "in" : "path",
+          "description" : "Número de la instancia.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }, {
+          "name" : "variableCode",
+          "in" : "path",
+          "description" : "Código de la variable.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Variable"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/searches" : {
+      "get" : {
+        "tags" : [ "BÚSQUEDAS" ],
+        "summary" : "Obtener todas las búsquedas.",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Search"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "BÚSQUEDAS" ],
+        "summary" : "Crear búsqueda.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewSearch"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/searches/search" : {
+      "get" : {
+        "tags" : [ "BÚSQUEDAS" ],
+        "summary" : "Buscar búsquedas con filtros, paginación y ordenación.",
+        "description" : "Búsqueda de <b><i>búsquedas</i></b> con filtros, paginación y ordenación.<br/>Campos de búsqueda(fields) Permitidos: <b><i>code | description</i></b><br/>Campos para ordenar(sort) Permitidos: <b><i>code | description</i></b><br/>Operadores permitidos: <b><i>eq | ne | lt | lte | gt | gte | in | nin | like | nlike | null | nnull</i></b><br/>Operadores lógicos permitidos: <b><i>and | or</i></b><br/>Campos devueltos en un registro: <b><i>code | description | query(base64)</i></b><br/><br/><b>Ejemplos: </b><br/> <b>filteredBy:</b> field1[eq]:value1;and;field2[like]:value2<br/> <b>pagedBy:</b> size:100;number:1<br/> <b>orderedBy:</b> -field1;+field2",
+        "parameters" : [ {
+          "name" : "filteredBy",
+          "in" : "query",
+          "description" : "Criterios para los filtros de la búsqueda.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "orderedBy",
+          "in" : "query",
+          "description" : "Criterios para el orden de la búsqueda.",
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "pagedBy",
+          "in" : "query",
+          "description" : "Criterios para la paginación de los resultados.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Retrieve"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/searches/{code}" : {
+      "get" : {
+        "tags" : [ "BÚSQUEDAS" ],
+        "summary" : "Obtener búsqueda.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la búsqueda.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Search"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "BÚSQUEDAS" ],
+        "summary" : "Actualizar búsqueda.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la búsqueda.",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChangeSearch"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "BÚSQUEDAS" ],
+        "summary" : "Eliminar búsqueda.",
+        "parameters" : [ {
+          "name" : "code",
+          "in" : "path",
+          "description" : "Código de la búsqueda.",
+          "required" : true,
+          "schema" : {
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/searches/{searchCode}/execute" : {
+      "post" : {
+        "tags" : [ "BÚSQUEDAS" ],
+        "summary" : "Ejecutar la búsqueda.",
+        "parameters" : [ {
+          "name" : "searchCode",
+          "in" : "path",
+          "description" : "Código de la búsqueda",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        }, {
+          "name" : "pagedBy",
+          "in" : "query",
+          "description" : "Criterios para la paginación de los resultados.",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExecuteParameter"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/searches/{searchCode}/valid" : {
+      "get" : {
+        "tags" : [ "BÚSQUEDAS" ],
+        "summary" : "Validar la búsqueda.",
+        "parameters" : [ {
+          "name" : "searchCode",
+          "in" : "path",
+          "description" : "Código de la búsqueda",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "nullable" : false
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Successful"
+                }
+              }
+            }
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          },
+          "406" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ValidateException"
+                }
+              }
+            }
+          },
+          "500" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Exception"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ChangeCodiguera" : {
+        "description" : "Información de codiguera",
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "description" : "Nombre de la codiguera",
+            "maxLength" : 100,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }
+      },
+      "ChangeCommonData" : {
+        "description" : "Información del dato común",
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "description" : "Nombre del dato común",
+            "maxLength" : 100,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "value" : {
+            "description" : "Valor del dato común en JSON",
+            "type" : "object",
+            "nullable" : false
+          }
+        }
+      },
+      "ChangeDataInstance" : {
+        "description" : "Finalizar tarea",
+        "type" : "object",
+        "properties" : {
+          "acronym" : {
+            "description" : "Acrónimo asociado a la instancia",
+            "type" : "string"
+          },
+          "actionDate" : {
+            "format" : "date",
+            "description" : "DateTime de solicitud de la acción",
+            "type" : "string",
+            "example" : "2021-03-15T14:22:16.56Z[UTC]"
+          },
+          "actionUser" : {
+            "type" : "string"
+          },
+          "atRiskDate" : {
+            "format" : "date",
+            "description" : "Fecha de entrada en riesgo de la instancia",
+            "type" : "string"
+          },
+          "dueDate" : {
+            "format" : "date",
+            "description" : "Fecha de vencimiento de la instancia",
+            "type" : "string"
+          },
+          "isAtRisk" : {
+            "description" : "¿La instancia esta en riesgo de vencimiento?",
+            "type" : "boolean"
+          },
+          "name" : {
+            "description" : "Nombre de la instancia",
+            "type" : "string"
+          },
+          "newInstancestatus" : {
+            "description" : "Estado de la instancia. (active | completed | failed | terminated | did_not_start | suspended)",
+            "type" : "string"
+          },
+          "processName" : {
+            "description" : "Nombre del proceso al que corresponde",
+            "type" : "string"
+          },
+          "task" : {
+            "$ref" : "#/components/schemas/ChangeTask"
+          },
+          "variables" : {
+            "$ref" : "#/components/schemas/ListChangeVariableInputDto"
+          }
+        }
+      },
+      "ChangeTask" : {
+        "description" : "Actualizar tarea",
+        "required" : [ "activationTime", "dueDate", "isAtRisk", "nro", "owner", "priority", "processActivityName", "startDate", "status", "stepId", "stepName", "subject", "userFullName", "userId", "userLoginName" ],
+        "type" : "object",
+        "properties" : {
+          "activationTime" : {
+            "format" : "date",
+            "description" : "Fecha de disponibilidad  de la tarea",
+            "type" : "string",
+            "example" : "2021-03-15T14:22:16.56Z[UTC]",
+            "nullable" : false
+          },
+          "atRiskDate" : {
+            "format" : "date",
+            "description" : "Fecha de entrada en riesgo de la tarea",
+            "type" : "string",
+            "example" : "2021-03-15T14:22:16.56Z[UTC]"
+          },
+          "completionTime" : {
+            "format" : "date",
+            "description" : "Fecha de fin de la tarea",
+            "type" : "string",
+            "example" : "2021-03-15T14:22:16.56Z[UTC]"
+          },
+          "dueDate" : {
+            "format" : "date",
+            "description" : "Fecha de vencimiento de la tarea",
+            "type" : "string",
+            "example" : "2021-03-15T14:22:16.56Z[UTC]",
+            "nullable" : false
+          },
+          "isAtRisk" : {
+            "description" : "¿La tarea esta en riesgo de vencimiento?",
+            "type" : "boolean",
+            "nullable" : false
+          },
+          "nro" : {
+            "description" : "Indentificador de la tarea",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "owner" : {
+            "description" : "Dueño de la tarea",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "priority" : {
+            "description" : "Prioridad de la tarea",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "processActivityName" : {
+            "description" : "Nombre de la actividad del proceso para la tarea",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "startDate" : {
+            "format" : "date",
+            "description" : "Fecha de inicio de la tarea",
+            "type" : "string",
+            "example" : "2021-03-15T14:22:16.56Z[UTC]",
+            "nullable" : false
+          },
+          "status" : {
+            "description" : "Estado de la tarea. (new | received | replied | forwarded | sent | actioned | closed | special | deleted | alert | help_request | comment | answered_help_request | ignored_help_request | followed | tagged | collaboration\r\n)",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "stepId" : {
+            "description" : "Identificador del paso del proceso para la tarea",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "stepName" : {
+            "description" : "Nombre del paso del proceso para la tarea",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "subject" : {
+            "description" : "Asunto de la tarea",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "taskVariable" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListChangeVariableInputDto"
+            }, {
+              "description" : "Lista de variables de la tarea"
+            } ]
+          },
+          "userFullName" : {
+            "description" : "Nombre largo del usuario actual que tiene la tarea",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "userId" : {
+            "description" : "Identificador del usuario actual que tiene la tarea",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "userLoginName" : {
+            "description" : "Nombre corto del usuario actual que tiene la tarea",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }
+      },
+      "ChangeVariable" : {
+        "description" : "Agregar o actualizar variable",
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código de la variable",
+            "maxLength" : 36,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "name" : {
+            "description" : "Nombre de la variable",
+            "maxLength" : 100,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "value" : {
+            "description" : "Valor de la variable en JSON",
+            "type" : "object",
+            "nullable" : false
+          }
+        }
+      },
+      "ListChangeVariableInputDto" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/ChangeVariable"
+        }
+      },
+      "ChangeDataTask" : {
+        "description" : "Finalizar tarea",
+        "type" : "object",
+        "properties" : {
+          "changeTask" : {
+            "$ref" : "#/components/schemas/ChangeTask"
+          },
+          "ListChangeVariable" : {
+            "$ref" : "#/components/schemas/ListChangeVariableInputDto"
+          }
+        }
+      },
+      "ChangeItemCodiguera" : {
+        "description" : "Información de un item de codiguera",
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "description" : "Nombre del item de la codiguera",
+            "maxLength" : 100,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "value" : {
+            "description" : "Valor del item de la codiguera en JSON",
+            "type" : "object",
+            "nullable" : false
+          }
+        }
+      },
+      "ChangeSearch" : {
+        "description" : "Datos de la búsqueda para actualizar",
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "description" : "Descripción de la búsqueda",
+            "maxLength" : 1000,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "nameFuntion" : {
+            "description" : "Nombre de la función",
+            "maxLength" : 100,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "params" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListParameterInputDto"
+            }, {
+              "description" : "Parámetros de la búsqueda"
+            } ]
+          }
+        }
+      },
+      "Parameter" : {
+        "description" : "Información código y nombre",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código",
+            "maxLength" : 36,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "name" : {
+            "description" : "Nombre",
+            "maxLength" : 100,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "type" : {
+            "description" : "Tipo, (STRING | INTEGER | DECIMAL | BOOLEAN)",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }
+      },
+      "ListParameterInputDto" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Parameter"
+        }
+      },
+      "CodigueraBasic" : {
+        "description" : "Información de codiguera",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código de la codiguera",
+            "type" : "string"
+          },
+          "name" : {
+            "description" : "Nombre de la codiguera",
+            "type" : "string"
+          }
+        }
+      },
+      "Codiguera" : {
+        "description" : "Información de codiguera",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código de la codiguera",
+            "type" : "string"
+          },
+          "items" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListItemCodigueraOutputDto"
+            }, {
+              "description" : "Items codiguera"
+            } ]
+          },
+          "name" : {
+            "description" : "Nombre de la codiguera",
+            "type" : "string"
+          }
+        }
+      },
+      "ItemCodiguera" : {
+        "description" : "Información de un item de codiguera",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código del item de la codiguera",
+            "maxLength" : 36,
+            "type" : "string"
+          },
+          "name" : {
+            "description" : "Nombre del item de la codiguera",
+            "maxLength" : 100,
+            "type" : "string"
+          },
+          "parentCode" : {
+            "description" : "Código padre del item de la codiguera",
+            "maxLength" : 36,
+            "type" : "string"
+          },
+          "status" : {
+            "description" : "Estado del item de la codiguera",
+            "type" : "string"
+          },
+          "value" : {
+            "description" : "Valor del item de la codiguera en JSON",
+            "type" : "object"
+          }
+        }
+      },
+      "ListItemCodigueraOutputDto" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/ItemCodiguera"
+        }
+      },
+      "CommonData" : {
+        "description" : "Información del dato común",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código del dato común",
+            "maxLength" : 36,
+            "type" : "string"
+          },
+          "name" : {
+            "description" : "Nombre del dato común",
+            "maxLength" : 100,
+            "type" : "string"
+          },
+          "value" : {
+            "description" : "Valor del dato común en JSON",
+            "type" : "object"
+          }
+        }
+      },
+      "Exception" : {
+        "description" : "Información de la excepción",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código.",
+            "type" : "string"
+          },
+          "message" : {
+            "description" : "Mensaje.",
+            "type" : "string"
+          },
+          "timestamp" : {
+            "format" : "date",
+            "description" : "Fecha.",
+            "type" : "string"
+          }
+        }
+      },
+      "ExecuteParameter" : {
+        "description" : "Ejecución de la búsqueda",
+        "type" : "object",
+        "properties" : {
+          "params" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListParameterValueInputDto"
+            }, {
+              "description" : "Parametros"
+            } ]
+          }
+        }
+      },
+      "ParameterValue" : {
+        "description" : "Información código y value",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código",
+            "type" : "string"
+          },
+          "value" : {
+            "description" : "Value",
+            "type" : "object"
+          }
+        }
+      },
+      "ListParameterValueInputDto" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/ParameterValue"
+        }
+      },
+      "Instance" : {
+        "description" : "Nueva instancia",
+        "type" : "object",
+        "properties" : {
+          "acronym" : {
+            "description" : "Acrónimo asociado a la instancia",
+            "type" : "string"
+          },
+          "atRiskDate" : {
+            "format" : "date",
+            "description" : "Fecha de entrada en riesgo de la instancia",
+            "type" : "string"
+          },
+          "closeDatetime" : {
+            "format" : "date",
+            "description" : "Fecha de cierre de la instancia",
+            "type" : "string"
+          },
+          "dueDate" : {
+            "format" : "date",
+            "description" : "Fecha de vencimiento de la instancia",
+            "type" : "string"
+          },
+          "isAtRisk" : {
+            "description" : "¿La instancia esta en riesgo de vencimiento?",
+            "type" : "boolean"
+          },
+          "lastModifiedDatetime" : {
+            "format" : "date",
+            "description" : "Fecha de última modificación de la instancia",
+            "type" : "string"
+          },
+          "name" : {
+            "description" : "Nombre de la instancia",
+            "type" : "string"
+          },
+          "nro" : {
+            "description" : "Identificador de la instancia",
+            "type" : "string"
+          },
+          "processName" : {
+            "description" : "Nombre del proceso al que corresponde",
+            "type" : "string"
+          },
+          "startDate" : {
+            "format" : "date",
+            "description" : "Fecha de inicio de la instancia",
+            "type" : "string"
+          },
+          "status" : {
+            "description" : "Estado de la instancia. (active | completed | failed | terminated | did_not_start | suspended)",
+            "type" : "string"
+          }
+        }
+      },
+      "ItemValidateException" : {
+        "description" : "Información del item de validación",
+        "type" : "object",
+        "properties" : {
+          "message" : {
+            "description" : "Mensaje de validación del parámetro.",
+            "type" : "string"
+          },
+          "param" : {
+            "description" : "Parámetro.",
+            "type" : "string"
+          }
+        }
+      },
+      "NewCodiguera" : {
+        "description" : "Información de codiguera",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código de la codiguera",
+            "maxLength" : 36,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "name" : {
+            "description" : "Nombre de la codiguera",
+            "maxLength" : 100,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }
+      },
+      "NewCommonData" : {
+        "description" : "Información del dato común",
+        "required" : [ "code", "name", "value" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código del dato común",
+            "maxLength" : 36,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "name" : {
+            "description" : "Nombre del dato común",
+            "maxLength" : 100,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "value" : {
+            "description" : "Valor del dato común en JSON",
+            "type" : "object",
+            "nullable" : false
+          }
+        }
+      },
+      "NewInstance" : {
+        "description" : "Nueva instancia",
+        "required" : [ "isAtRisk", "lastModifiedDatetime", "name", "startDate", "status" ],
+        "type" : "object",
+        "properties" : {
+          "acronym" : {
+            "description" : "Acrónimo asociado a la instancia",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "atRiskDate" : {
+            "format" : "date",
+            "description" : "Fecha de entrada en riesgo de la instancia",
+            "type" : "string"
+          },
+          "closeDatetime" : {
+            "format" : "date",
+            "description" : "Fecha de cierre de la instancia",
+            "type" : "string"
+          },
+          "dueDate" : {
+            "format" : "date",
+            "description" : "Fecha de vencimiento de la instancia",
+            "type" : "string"
+          },
+          "isAtRisk" : {
+            "description" : "¿La instancia esta en riesgo de vencimiento?",
+            "type" : "boolean",
+            "nullable" : false
+          },
+          "lastModifiedDatetime" : {
+            "format" : "date",
+            "description" : "Fecha de última modificación de la instancia",
+            "type" : "string",
+            "nullable" : false
+          },
+          "name" : {
+            "description" : "Nombre de la instancia",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "processName" : {
+            "description" : "Nombre del proceso al que corresponde",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "startDate" : {
+            "format" : "date",
+            "description" : "Fecha de inicio de la instancia",
+            "type" : "string",
+            "example" : "2021-03-15T14:22:16.56Z[UTC]",
+            "nullable" : false
+          },
+          "status" : {
+            "description" : "Estado de la instancia. (active | completed | failed | terminated | did_not_start | suspended)",
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          }
+        }
+      },
+      "NewItemCodiguera" : {
+        "description" : "Información de un item de codiguera",
+        "required" : [ "value" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código del item de la codiguera",
+            "maxLength" : 36,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "name" : {
+            "description" : "Nombre del item de la codiguera",
+            "maxLength" : 100,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "value" : {
+            "description" : "Valor del item de la codiguera en JSON",
+            "type" : "object",
+            "nullable" : false
+          }
+        }
+      },
+      "NewSearch" : {
+        "description" : "Información de búsqueda guardada",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código de la búsqueda",
+            "maxLength" : 36,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "description" : {
+            "description" : "Descripción de la búsqueda",
+            "maxLength" : 1000,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "nameFuntion" : {
+            "description" : "Nombre de la función",
+            "maxLength" : 100,
+            "minLength" : 3,
+            "pattern" : "\\S",
+            "type" : "string",
+            "nullable" : false
+          },
+          "params" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListParameterInputDto"
+            }, {
+              "description" : "Parámetros de la búsqueda"
+            } ]
+          }
+        }
+      },
+      "Retrieve" : {
+        "description" : "Resultado de búqueda",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListAbstractOutputDto"
+            }, {
+              "description" : "Lista de registros"
+            } ]
+          },
+          "pageNumber" : {
+            "format" : "int32",
+            "description" : "Número de página actual",
+            "type" : "integer"
+          },
+          "pageSize" : {
+            "format" : "int32",
+            "description" : "Registros por página",
+            "type" : "integer"
+          },
+          "query" : {
+            "description" : "Filtro aplicado en la consulta",
+            "type" : "string"
+          },
+          "totalItem" : {
+            "format" : "int32",
+            "description" : "Total de registros",
+            "type" : "integer"
+          },
+          "totalPage" : {
+            "format" : "int32",
+            "description" : "Total de páginas",
+            "type" : "integer"
+          }
+        }
+      },
+      "AbstractOutputDto" : {
+        "type" : "object"
+      },
+      "ListAbstractOutputDto" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/AbstractOutputDto"
+        }
+      },
+      "Search" : {
+        "description" : "Información de búsqueda guardada",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código de la búsqueda",
+            "maxLength" : 36,
+            "type" : "string"
+          },
+          "description" : {
+            "description" : "Descripción de la búsqueda",
+            "maxLength" : 1000,
+            "type" : "string"
+          },
+          "nameFuntion" : {
+            "description" : "Nombre de la función",
+            "type" : "string"
+          },
+          "params" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListParameterInputDto"
+            }, {
+              "description" : "Parámetros de la búsqueda"
+            } ]
+          }
+        }
+      },
+      "Successful" : {
+        "description" : "Información del resultado satisfactorio",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código.",
+            "type" : "string"
+          },
+          "message" : {
+            "description" : "Mensaje.",
+            "type" : "string"
+          },
+          "timestamp" : {
+            "format" : "date",
+            "description" : "Fecha de envío.",
+            "type" : "string"
+          }
+        }
+      },
+      "Task" : {
+        "description" : "Información de la tarea",
+        "type" : "object",
+        "properties" : {
+          "activationTime" : {
+            "format" : "date",
+            "description" : "Fecha de disponibilidad  de la tarea",
+            "type" : "string"
+          },
+          "atRiskDate" : {
+            "format" : "date",
+            "description" : "Fecha de entrada en riesgo de la tarea",
+            "type" : "string"
+          },
+          "completionTime" : {
+            "format" : "date",
+            "description" : "Fecha de fin de la tarea",
+            "type" : "string"
+          },
+          "dueDate" : {
+            "format" : "date",
+            "description" : "Fecha de vencimiento de la tarea",
+            "type" : "string"
+          },
+          "isAtRisk" : {
+            "description" : "¿La tarea esta en riesgo de vencimiento?",
+            "type" : "boolean"
+          },
+          "nro" : {
+            "description" : "Indentificador de la tarea",
+            "type" : "string"
+          },
+          "owner" : {
+            "description" : "Dueño de la tarea",
+            "type" : "string"
+          },
+          "priority" : {
+            "description" : "Prioridad de la tarea",
+            "type" : "string"
+          },
+          "processActivityName" : {
+            "description" : "Nombre de la actividad del proceso para la tarea",
+            "type" : "string"
+          },
+          "startDate" : {
+            "format" : "date",
+            "description" : "Fecha de inicio de la tarea",
+            "type" : "string"
+          },
+          "status" : {
+            "description" : "Estado de la tarea. (new | received | replied | forwarded | sent | actioned | closed | special | deleted | alert | help_request | comment | answered_help_request | ignored_help_request | followed | tagged | collaboration\r\n)",
+            "type" : "string"
+          },
+          "stepId" : {
+            "description" : "Identificador del paso del proceso para la tarea",
+            "type" : "string"
+          },
+          "stepName" : {
+            "description" : "Nombre del paso del proceso para la tarea",
+            "type" : "string"
+          },
+          "subject" : {
+            "description" : "Asunto de la tarea",
+            "type" : "string"
+          },
+          "taskVariable" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListVariableOutputDto"
+            }, {
+              "description" : "Lista de variables de la tarea"
+            } ]
+          },
+          "userFullName" : {
+            "description" : "Nombre largo del usuario actual que tiene la tarea",
+            "type" : "string"
+          },
+          "userId" : {
+            "description" : "Identificador del usuario actual que tiene la tarea",
+            "type" : "string"
+          },
+          "userLoginName" : {
+            "description" : "Nombre corto del usuario actual que tiene la tarea",
+            "type" : "string"
+          }
+        }
+      },
+      "Variable" : {
+        "description" : "Información de la variable",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código de la variable",
+            "maxLength" : 36,
+            "type" : "string"
+          },
+          "name" : {
+            "description" : "Nombre de la variable",
+            "maxLength" : 100,
+            "type" : "string"
+          },
+          "value" : {
+            "description" : "Valor de la variable en JSON",
+            "type" : "object"
+          }
+        }
+      },
+      "ListVariableOutputDto" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/Variable"
+        }
+      },
+      "ValidateException" : {
+        "description" : "Información de la validación",
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "description" : "Código.",
+            "type" : "string"
+          },
+          "message" : {
+            "description" : "Mensaje.",
+            "type" : "string"
+          },
+          "timestamp" : {
+            "format" : "date",
+            "description" : "Fecha.",
+            "type" : "string"
+          },
+          "validations" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/ListItemValidateExceptionOutputDto"
+            }, {
+              "description" : "Lista de validaciones"
+            } ]
+          }
+        }
+      },
+      "ListItemValidateExceptionOutputDto" : {
+        "type" : "array",
+        "items" : {
+          "$ref" : "#/components/schemas/ItemValidateException"
+        }
+      }
+    }
+  }
+}
